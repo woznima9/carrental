@@ -6,28 +6,47 @@ public class KeyReader {
     private String key;
     private String text;
     Scanner scanner = new Scanner(System.in);
+    Options option;
 
-    String getKey() {
-
-        boolean letterIsNotCorrect;
+    Options pointOption() {
+        boolean keyNotCorrect;
         do {
-            key = scanner.next().substring(0, 1);
-            if (Options.getActiveKeysForOptions().contains(key)) {
-                letterIsNotCorrect = false;
-            } else {
-                System.out.println("wybierz aktywną literkę z ponizszych dostępnych");
-                System.out.println(Options.getActiveKeysForOptions());
-                letterIsNotCorrect = true;
+            keyNotCorrect = false;
+            int key = scanner.nextInt();
+            switch (key) {
+                case 1:
+                    option = Options.Enter_Client;
+                    break;
+                case 2:
+                    option = Options.Show_All_Clients;
+                    break;
+                case 3:
+                    option = Options.Enter_New_Car;
+                    break;
+                case 4:
+                    option = Options.Show_AllCars;
+                    break;
+                case 5:
+                    option = Options.Rent_Car;
+                    break;
+                case 6:
+                    option = Options.Import_Cars_Clients_Data;
+                    break;
+                case 7:
+                    option = Options.EXIT_App;
+                    break;
+                default:
+                    keyNotCorrect = true;
+                    break;
             }
         }
-        while (letterIsNotCorrect);
-        return key;
+        while (keyNotCorrect);
+        return option;
     }
 
     String getText() {
         text = scanner.nextLine();
+
         return text;
     }
-
-
 }

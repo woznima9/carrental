@@ -1,38 +1,28 @@
 package carrentalapp;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public enum Options {
-    e("Enter one Client"),
-    s("Show all Clients in name alphabetical order"),
-    d("robienie czynności D"),
-    f("robienie czynności F"),
-    x("EXIT");
+    Enter_Client("Enter one Client", 1),
+    Show_All_Clients("Show all Clients in name alphabetical order", 2),
+    Enter_New_Car("Enter new Car", 3),
+    Show_AllCars("Show all Cars", 4),
+    Rent_Car("Rent a car", 5),
+    Import_Cars_Clients_Data("import CSV Cars and Clients", 6),
+    EXIT_App("EXIT", 7);
 
     private String optionName;
+    private int keyNumber;
 
-
-    static public ArrayList<String> getActiveKeysForOptions() {
-        ArrayList<String> as = new ArrayList<>();
-//        for (Options a : Options.values()) {
-//            as.add(a.toString());
-//        }
-//        Arrays.stream(Options.values()).map(a->a.toString()).forEach(as::add);  // to jest void (jak przekształcić ?
-        Arrays.stream(Options.values()).map(a -> a.toString()).forEach(as::add);
-        return as;
+    Options(String optionName, int keyNumber) {
+        this.optionName = optionName;
+        this.keyNumber = keyNumber;
     }
 
-    Options(String optionName) {
-        this.optionName = optionName;
+    public int getKeyNumber() {
+        return keyNumber;
     }
 
     public String getOptionName() {
         return optionName;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

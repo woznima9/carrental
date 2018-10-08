@@ -1,5 +1,7 @@
 package carrentalapp;
 
+import java.util.Objects;
+
 public class Client implements Comparable<Client> {
     static int id = 0;
     int clientNumber;
@@ -29,5 +31,18 @@ public class Client implements Comparable<Client> {
     public int compareTo(Client o) {
         return this.clientNumber - o.clientNumber;  // sortowanie naturalne po id
 //        return this.firstName.compareTo(o.firstName);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+        Client client = (Client) o;
+        return Objects.equals(firstName, client.firstName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName);
     }
 }
