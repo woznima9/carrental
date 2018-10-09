@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Client implements Comparable<Client> {
     static int id = 0;
-    int clientNumber;
-    String firstName;
-    String lastName;
-    String birthDate;
+    private int clientNumber;
+    private String firstName;
+    private String lastName;
+    private String birthDate;
 
     public Client(String firstName, String lastName, String birthDate) {
         id++;
@@ -15,6 +15,23 @@ public class Client implements Comparable<Client> {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getClientNumber() {
+        return clientNumber;
+    }
+
+    public String chosenClient() {
+        String text = "wybrany Client: " + getFirstName() + " " + getLastName();
+        return text;
     }
 
     @Override

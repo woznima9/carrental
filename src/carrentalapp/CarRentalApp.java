@@ -1,14 +1,15 @@
 package carrentalapp;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class CarRentalApp {
     Clients clients = new Clients();
     Cars cars = new Cars();
-    Rentals fixRental = new Rentals();
+    RentCar fixRental = new RentCar();
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         System.out.println("______car rental_______");
         DataImports dataImports = new DataImports();
         CarRentalApp app = new CarRentalApp();
@@ -16,12 +17,11 @@ public class CarRentalApp {
         System.out.println("_______________________");
     }
 
-    void mainMenu() {
+    void mainMenu() throws InterruptedException {
         KeyReader keyReader = new KeyReader();
         boolean execute = true;
         while (execute) {
             showMenu();
-            System.out.println("Enter number for option");
             switch (keyReader.pointOption()) {
                 case Enter_Client:
                     System.out.println(Options.Enter_Client.getOptionName());
@@ -42,7 +42,7 @@ public class CarRentalApp {
 
                 case Rent_Car:
                     System.out.println(Options.Rent_Car.getOptionName());
-//                    fixRental.rentals(clients.getClientsSet(), cars.getCarsSet());
+                    fixRental.rent(clients.getClientsSet(), cars.getCars());
                     break;
                 case Import_Cars_Clients_Data:
                     System.out.println(Options.Import_Cars_Clients_Data.getOptionName());
@@ -69,8 +69,12 @@ public class CarRentalApp {
     }
 
     void showMenu() {
-        for (Options o : Options.values()) {
-            System.out.println(o.getKeyNumber() + " - " + o.getOptionName());
-        }
+//        for (Options o : Options.values()) {
+//            System.out.println(o.getKeyNumber() + " - " + o.getOptionName());
+//        }
+        System.out.println("__car_rental_main_MENU__");
+        Arrays.stream(Options.values()).map(o -> o.getKeyNumber() + " - " + o.getOptionName()).forEach(System.out::println);
+        System.out.println("Enter number for option");
+
     }
 }

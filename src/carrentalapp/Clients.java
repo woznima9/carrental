@@ -18,7 +18,7 @@ public class Clients {
     }
 
     void showAllClientsInAlphabeticalOrder() {
-        clientsHS.stream().sorted(new SortByName()).map(c -> c.firstName).forEach(System.out::println);
+        clientsHS.stream().sorted(new SortByName()).map(c -> c.getFirstName()).forEach(System.out::println);
     }
 
     Set<Client> getClientsSet() {
@@ -28,7 +28,7 @@ public class Clients {
     class SortByName implements Comparator<Client> {
         @Override
         public int compare(Client o1, Client o2) {
-            int wynik = o1.firstName.compareTo(o2.firstName);
+            int wynik = o1.getFirstName().compareTo(o2.getFirstName());
             if (wynik > 0) return 1;
             if (wynik < 0) return -1;
             return 0;
@@ -38,7 +38,7 @@ public class Clients {
     class SortById implements Comparator<Client> {
         @Override
         public int compare(Client o1, Client o2) {
-            return Integer.compare(o1.clientNumber, o2.clientNumber);
+            return Integer.compare(o1.getClientNumber(), o2.getClientNumber());
         }
     }
 }
