@@ -1,9 +1,16 @@
 package carrentalapp;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cars {
-    Map<Car, Client> cars = new HashMap<>();
+    Set<Car> cars;
+
+    public Cars(Set<Car> carsSet) {
+        this.cars = carsSet;
+
+    }
+
 
     void addCar() {
         KeyReader kr = new KeyReader();
@@ -14,15 +21,24 @@ public class Cars {
         System.out.println("wprowadź DayliRate:");
         String dayliRate = kr.getText();
 
-        cars.put(new Car(model, vin, dayliRate), null);
+        System.out.println(dayliRate);
+
+
+        cars.add(new Car(model, vin, dayliRate));
     }
 
 
     void listAllCars() {
-        cars.keySet().stream().map(Car::showCar).forEach(System.out::println);
+        cars.stream().map(Car::showCar).forEach(System.out::println);
     }
 
-    public Map<Car, Client> getCars() {
+    public Set<Car> getCars() {
         return cars;
+    }
+
+    public Car getCar(int key) {
+        Collection<Car> c = new TreeSet<>(cars);
+        Object[] cA=c.toArray();
+        return (Car)cA[key];
     }
 }

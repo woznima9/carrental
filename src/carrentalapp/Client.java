@@ -30,7 +30,7 @@ public class Client implements Comparable<Client> {
     }
 
     public String chosenClient() {
-        String text = "wybrany Client: " + getFirstName() + " " + getLastName();
+        String text = String.format("client: %10s\t\t%10s\t\t(%2d)", getFirstName(),getLastName(),getClientNumber());
         return text;
     }
 
@@ -46,8 +46,8 @@ public class Client implements Comparable<Client> {
 
     @Override
     public int compareTo(Client o) {
-        return this.clientNumber - o.clientNumber;  // sortowanie naturalne po id
-//        return this.firstName.compareTo(o.firstName);
+//        return this.clientNumber - o.clientNumber;  // sortowanie naturalne po id
+        return this.firstName.compareTo(o.firstName);
     }
 
     @Override

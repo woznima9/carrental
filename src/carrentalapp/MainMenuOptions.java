@@ -1,6 +1,6 @@
 package carrentalapp;
 
-public enum Options {
+public enum MainMenuOptions {
     Enter_Client("Enter one Client", 1),
     Show_All_Clients("Show all Clients in name alphabetical order", 2),
     Enter_New_Car("Enter new Car", 3),
@@ -12,7 +12,7 @@ public enum Options {
     private String optionName;
     private int keyNumber;
 
-    Options(String optionName, int keyNumber) {
+    MainMenuOptions(String optionName, int keyNumber) {
         this.optionName = optionName;
         this.keyNumber = keyNumber;
     }
@@ -25,4 +25,8 @@ public enum Options {
         return optionName;
     }
 
+    static MainMenuOptions getOption(int key){
+        MainMenuOptions[] option=MainMenuOptions.values();
+        return option[key];
+    }
 }

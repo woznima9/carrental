@@ -17,4 +17,9 @@ public enum RentSubmenuOption {
     public int getActiveKey() {
         return activeKey;
     }
+
+    static RentSubmenuOption  getRentSubmenuOption(int key){
+        RentSubmenuOption[] option = RentSubmenuOption.values();
+        return option[key];
+    }
 }

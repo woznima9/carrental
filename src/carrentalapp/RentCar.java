@@ -3,13 +3,27 @@ package carrentalapp;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static carrentalapp.RentSubmenuOption.getRentSubmenuOption;
+
+
 public class RentCar {
     KeyReader kre = new KeyReader();
+    Clients clients;
+    Cars cars;
+    Client c;
+    Car car;
 
-    void rent(Set<Client> clients, Map<Car, Client> cars) throws InterruptedException {
-        rentSubmenu(clients, cars);
+    public RentCar(Clients clients, Cars cars) {
+        this.clients = clients;
+        this.cars = cars;
+    }
 
-        System.out.println("SSTTTTTTTTTTTTTOOOOOOOOOOOOOPPPPPPPPPPPP");
+    void rent() throws InterruptedException {
+        showSubmenu();
+        rentSubmenu();
+        clients.rentCar(c, car);
+
+
 //        System.out.println("Zarejestrowani Klienci");
 //        clients.stream().map(client -> "Client: "+client.firstName + " "+client.lastName).forEach(System.out::println);
 //        System.out.println("posiadane auta");
@@ -71,79 +85,61 @@ public class RentCar {
 
     }
 
-    private void rentSubmenu(Set<Client> clients, Map<Car, Client> cars) throws InterruptedException {
+    void rentSubmenu() throws InterruptedException {
+        RentSubmenuOption option;
 
-        boolean noExitSubmenu = true;
-        do {
-            showSubmenu();
-            switch (kre.rentSubmenuOption()) {
+        showSubmenu();
+        while ((option = getRentSubmenuOption(kre.getInt() - 1)) != RentSubmenuOption.EXIT_submenu) {
+            switch (option) {
                 case Point_Client_For_Rent_A_Car:
                     System.out.println("Piont the Client:");
-                    Client client = pointAClient(clients);
-                    System.out.println("Pionted Client completed.!!");
+                    System.out.println("...choice Client to rent a car");
+                    clients.showAllClientsInAlphabeticalOrder();
+                    c = clients.getClient(kre.getInt());
+                    System.out.println("Wybrano klienta " + c);
+                    System.out.println("SSTTIIOOPP");
                     Thread.sleep(3000);
                     break;
                 case Point_Car_For_Rental:
                     System.out.println("Piont Car for rent:");
-                    Car car = pointACar(cars);
+                    cars.listAllCars();
+                    car = cars.getCar(kre.getInt());
+                    System.out.println("Wtbrano Cara: " + car);
+
+                    Thread.sleep(3000);
+
                     break;
                 case Show_all_Rentals_In_Alphabetical_Client:
                     System.out.println("Shw all rental Clients");
-//                    showAllRentalsInAlphabeticalClient();
+                    Thread.sleep(3000);
+
                     break;
                 case Show_all_Rentals_In_Alphabetical_Model:
                     System.out.println("Shw all rental Cars");
-//                    showAllRentalsInAlphabeticalModel();
+                    Thread.sleep(3000);
+
                     break;
                 case Loose_Car_from_Rental:
                     System.out.println("Lose car TODO");
+
+                    Thread.sleep(3000);
                     break;
                 case EXIT_submenu:
                     System.out.println("ustawiam zmienną na wyjście");
-                    noExitSubmenu = false;
                     break;
                 default:
                     System.out.println("DEFOULT submenu");
                     break;
             }
-        } while (noExitSubmenu);
+            showSubmenu();
+        }
 
         System.out.println("WYSZEDŁ");
     }
 
 
-    Client pointAClient(Set<Client> clients) {
-        String name = "";
-        Client returnedClient = null;
-        List<Client> tempClients;
-        tempClients = clients.stream().sorted(Client::compareTo).collect(Collectors.toList());
-        tempClients.stream().map(c -> c.getClientNumber() + " " + c.getFirstName() + " " + c.getLastName()).forEach(System.out::println);
-        System.out.println("get Client number: (UWAGA licz od zera od góry");
-        int clientIndex = kre.getInt() - 1;
-        try {
-            returnedClient = tempClients.get(clientIndex);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println(e);
-            System.out.println("Najpierw załaduj dane");
-        } finally {
-            System.out.println("wykonało się finally");
-        }
-        System.out.println(returnedClient.chosenClient());
-        return returnedClient;
-    }
-
-    Car pointACar(Map<Car, Client> cars) {
-        String vin = "CEC45168";
-        List<Car> tempCar = new ArrayList<>();
-        Iterator carIterator = cars.values().iterator();
-        while (carIterator.hasNext()) {
-            System.out.println(carIterator.next().toString());
-        }
-        return null;
-    }
-
     void showSubmenu() {
-        System.out.println("__SUBMENU__car_rental___");
+        System.out.println("\n__SUBMENU__car_rental___");
         Arrays.stream(RentSubmenuOption.values()).map(c -> c.getActiveKey() + " " + c).forEach(System.out::println);
         System.out.println("Enter operation for rental:");
 

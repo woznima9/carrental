@@ -7,38 +7,46 @@ import java.util.Set;
 
 public class DataImports {
 
+    Map<Client, Car> clientCarRentalMap;
+    Set<Car> cars;
 
-    Set<Client> importClientFromFile(Set<Client> clientsHS) throws IOException {
-        String s;
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader("clients.csv"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String[] meta;
-        while ((s = in.readLine()) != null) {
-            meta = s.split(";");
-            clientsHS.add(new Client(meta[0], meta[1], meta[2]));
-        }
-        in.close();
-        return clientsHS;
+    public DataImports(Map<Client, Car> clientCarRentalMap, Set<Car> cars) {
+        this.clientCarRentalMap = clientCarRentalMap;
+        this.cars = cars;
     }
 
-    Map<Car, Client> importCarFromFile(Map<Car, Client> cars) throws IOException {
+    Map<Client,Car> importClientFromFile(String fileName) throws IOException {
         String s;
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new FileReader("cars.csv"));
+            in = new BufferedReader(new FileReader(fileName));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         String[] meta;
         while ((s = in.readLine()) != null) {
             meta = s.split(";");
-            cars.put(new Car(meta[0], meta[1], meta[2]), null);
+            clientCarRentalMap.put(new Client(meta[0], meta[1], meta[2]),null);
+        }
+        in.close();
+        return clientCarRentalMap;
+    }
+
+    Set<Car> importCarFromFile(String filename) throws IOException {
+        String s;
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader(filename));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String[] meta;
+        while ((s = in.readLine()) != null) {
+            meta = s.split(";");
+            cars.add(new Car(meta[0], meta[1], meta[2]));
         }
         in.close();
         return cars;
     }
+
 }

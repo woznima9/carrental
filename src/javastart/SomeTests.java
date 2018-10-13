@@ -4,7 +4,7 @@ public class SomeTests {
 
     public static void main(String[] args) {
         int x = 's';
-        System.out.println("wartość x: " + x);  //125
+        System.out.println("wartość x: " + x);  //output 125
         char znak = 124;
         char znak2 = '\u0042';
         System.out.println(znak);

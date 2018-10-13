@@ -1,80 +1,85 @@
 package carrentalapp;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
 
 public class CarRentalApp {
-    Clients clients = new Clients();
-    Cars cars = new Cars();
-    RentCar fixRental = new RentCar();
-
+    static final String filenameClientsData="clients.csv";
+    static final String filenameCarsData="cars.csv";
+    Map<Client, Car> clientCarRentalMap;
+    Set<Car> carsSet;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        System.out.println("______car rental_______");
-        DataImports dataImports = new DataImports();
-        CarRentalApp app = new CarRentalApp();
-        app.mainMenu();
+        System.out.println("car-rental.APP");
+
+        CarRentalApp carRentalApp = new CarRentalApp();
+        carRentalApp.clientCarRentalMap = new HashMap<>();
+        carRentalApp.mainMenu();
+        System.out.println(carRentalApp.clientCarRentalMap);
+        System.out.println(carRentalApp.carsSet);
+
         System.out.println("_______________________");
     }
 
     void mainMenu() throws InterruptedException {
         KeyReader keyReader = new KeyReader();
-        boolean execute = true;
-        while (execute) {
-            showMenu();
-            switch (keyReader.pointOption()) {
+        MainMenuOptions option;
+
+        Clients clients = new Clients(clientCarRentalMap);
+        carsSet= new HashSet<>();
+        Cars cars = new Cars(carsSet);
+
+        showMenu();
+        while ((option = MainMenuOptions.getOption(keyReader.getInt() - 1)) != MainMenuOptions.EXIT_App) {
+            switch (option) {
                 case Enter_Client:
-                    System.out.println(Options.Enter_Client.getOptionName());
-                    clients.addClient();
+                    System.out.println(MainMenuOptions.Enter_Client.getOptionName());
+                    clients.addClient(clientCarRentalMap);
                     break;
                 case Show_All_Clients:
-                    System.out.println(Options.Show_All_Clients.getOptionName());
+                    System.out.println(MainMenuOptions.Show_All_Clients.getOptionName());
                     clients.showAllClientsInAlphabeticalOrder();
                     break;
                 case Enter_New_Car:
-                    System.out.println(Options.Enter_New_Car.getOptionName());
+                    System.out.println(MainMenuOptions.Enter_New_Car.getOptionName());
                     cars.addCar();
                     break;
                 case Show_AllCars:
-                    System.out.println(Options.Show_AllCars.getOptionName());
+                    System.out.println(MainMenuOptions.Show_AllCars.getOptionName());
                     cars.listAllCars();
                     break;
-
                 case Rent_Car:
-                    System.out.println(Options.Rent_Car.getOptionName());
-                    fixRental.rent(clients.getClientsSet(), cars.getCars());
+                    System.out.println(MainMenuOptions.Rent_Car.getOptionName());
+                    RentCar rentCar = new RentCar(clients,cars);
+                    rentCar.rent();
                     break;
                 case Import_Cars_Clients_Data:
-                    System.out.println(Options.Import_Cars_Clients_Data.getOptionName());
-                    DataImports dataImports = new DataImports();
+                    System.out.println(MainMenuOptions.Import_Cars_Clients_Data.getOptionName());
+                    DataImports dataImports = new DataImports(clientCarRentalMap,carsSet);
                     try {
-                        dataImports.importClientFromFile(clients.getClientsSet());
+                        clientCarRentalMap=dataImports.importClientFromFile(filenameClientsData);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     try {
-                        dataImports.importCarFromFile(cars.getCars());
+                        carsSet=dataImports.importCarFromFile(filenameCarsData);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case EXIT_App:
-                    execute = false;
                     break;
                 default:
                     System.out.println("remember - add code for current list");
                     break;
             }
+            showMenu();
         }
     }
 
     void showMenu() {
-//        for (Options o : Options.values()) {
-//            System.out.println(o.getKeyNumber() + " - " + o.getOptionName());
-//        }
-        System.out.println("__car_rental_main_MENU__");
-        Arrays.stream(Options.values()).map(o -> o.getKeyNumber() + " - " + o.getOptionName()).forEach(System.out::println);
-        System.out.println("Enter number for option");
-
+        System.out.println("_____MAIN_MENU_____");
+        Arrays.stream(MainMenuOptions.values()).map(o -> o.getKeyNumber() + " - " + o.getOptionName()).forEach(System.out::println);
+        System.out.println("                    .... enter option number\n");
     }
 }
