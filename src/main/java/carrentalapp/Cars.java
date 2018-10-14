@@ -4,13 +4,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Cars {
-    Set<Car> cars;
+    private Collection<Car> cars;
+    private Collection<Car> carsforRent;
 
-    public Cars(Set<Car> carsSet) {
-        this.cars = carsSet;
-
+    Cars(Set<Car> cars) {
+        this.cars = cars;
     }
-
 
     void addCar() {
         KeyReader kr = new KeyReader();
@@ -20,25 +19,32 @@ public class Cars {
         String vin = kr.getText();
         System.out.println("wprowadź DayliRate:");
         String dayliRate = kr.getText();
-
         System.out.println(dayliRate);
-
-
         cars.add(new Car(model, vin, dayliRate));
     }
 
 
-    void listAllCars() {
-        cars.stream().map(Car::showCar).forEach(System.out::println);
+    void listAllCarsReadyToRent() {
+        carsforRent = cars.stream().filter(c -> !c.isRent()).collect(Collectors.toList());
+        int i = 1;
+        for (Car c : carsforRent) {
+            System.out.println(i++ + " - " + c.getModel() + ", " + c.getVin());
+        }
     }
 
-    public Set<Car> getCars() {
+    public Collection<Car> getCars() {
         return cars;
     }
 
-    public Car getCar(int key) {
-        Collection<Car> c = new TreeSet<>(cars);
-        Object[] cA = c.toArray();
-        return (Car) cA[key];
+    Car getCarReadyToRent(int key) {
+        Object[] cA = carsforRent.toArray();
+        return (Car) cA[key - 1];
+    }
+
+    void listAllCars() {
+        int i = 1;
+        for (Car c : cars) {
+            System.out.println(i++ + " - " + c.getModel() + ", " + c.getVin() + " " + c.isRent());
+        }
     }
 }

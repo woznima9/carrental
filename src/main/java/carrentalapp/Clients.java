@@ -1,12 +1,12 @@
 package carrentalapp;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class Clients {
     Map<Client, Car> clientCarMap;
+    private TreeSet<Client> clients;
 
     public Clients(Map<Client, Car> clientCarMap) {
         this.clientCarMap = clientCarMap;
@@ -26,41 +26,33 @@ public class Clients {
     }
 
     void showAllClientsInAlphabeticalOrder() {
-        Set<Client> clients = clientCarMap.entrySet().stream().map(c -> c.getKey()).collect(Collectors.toSet());
+        clients = clientCarMap.entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toCollection(TreeSet::new));
         System.out.println("Sort in names order:");
-        clients.stream().sorted().forEach(System.out::println);
-//        System.out.println("sort naturalny");
-//        clients.stream().sorted(new SortById()).forEach(System.out::println);
+        int i = 1;
+        for (Client c : clients) {
+            System.out.println(i++ + " - " + c.getFirstName() + " " + c.getLastName());
+        }
     }
 
     Client getClient(int key) {
-        Collection<Client> cl = new TreeSet<>(clientCarMap.keySet());
-        Object[] cT = cl.toArray();
-        return (Client) cT[key];
+        Object[] cT = clients.toArray();
+        return (Client) cT[key - 1];
     }
 
-    Clients rentCar(Client c, Car ca) {
+    void rentCar(Client c, Car ca) {
+        Set set = clientCarMap.entrySet();
+        Iterator iterator = set.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry mentry = (Map.Entry) iterator.next();
+            if (mentry.getKey().equals(c)) {
+                if (mentry.getValue() != null) {
+                    Car temp = (Car) mentry.getValue();
+                    temp.setRent(false);
+                }
+            }
+        }
+        ca.setRent(true);
         clientCarMap.put(c, ca);
-
-        return (Clients) clientCarMap;
     }
-
 }
 
-
-//class SortById implements Comparator<Client> {
-//    @Override
-//    public int compare(Client o1, Client o2) {
-//        return Integer.compare(o1.getClientNumber(), o2.getClientNumber());
-//    }
-//}
-//
-//class SortByName implements Comparator<Client> {
-//    @Override
-//    public int compare(Client o1, Client o2) {
-//        int wynik = o1.getFirstName().compareTo(o2.getFirstName());
-//        if (wynik > 0) return 1;
-//        if (wynik < 0) return -1;
-//        return 0;
-//    }
-//}

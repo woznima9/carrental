@@ -2,8 +2,8 @@ package carrentalapp;
 
 import java.util.Scanner;
 
-public class KeyReader {
-    Scanner scanner = new Scanner(System.in);
+class KeyReader {
+    private Scanner scanner = new Scanner(System.in);
 
 
     String getText() {

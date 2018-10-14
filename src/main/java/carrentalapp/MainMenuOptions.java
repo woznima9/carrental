@@ -1,13 +1,14 @@
 package carrentalapp;
 
 public enum MainMenuOptions {
-    Enter_Client("Enter one Client", 1),
-    Show_All_Clients("Show all Clients in name alphabetical order", 2),
-    Enter_New_Car("Enter new Car", 3),
-    Show_AllCars("Show all Cars", 4),
-    Rent_Car("Rent a car", 5),
-    Import_Cars_Clients_Data("import CSV Cars and Clients", 6),
-    EXIT_App("EXIT", 7);
+
+    ENTER_CLIENT("Enter new client", 1),
+    SHOW_ALL_CLIENTS("Show all clients in alphabetical order by name", 2),
+    ENTER_NEW_CAR("Enter new car", 3),
+    SHOW_ALL_CARS("Show all cars", 4),
+    RENT_CAR("Rent a car", 5),
+    IMPORT_CARS_AND_CLIENTS_DATA("import data in CSV format for cars and clients", 6),
+    EXIT_APP("Exit", 7);
 
     private String optionName;
     private int keyNumber;

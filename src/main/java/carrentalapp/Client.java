@@ -3,7 +3,7 @@ package carrentalapp;
 import java.util.Objects;
 
 public class Client implements Comparable<Client> {
-    static int id = 0;
+    private static int id = 0;
     private int clientNumber;
     private String firstName;
     private String lastName;
@@ -17,15 +17,15 @@ public class Client implements Comparable<Client> {
         this.birthDate = birthDate;
     }
 
-    public String getFirstName() {
+    String getFirstName() {
         return firstName;
     }
 
-    public String getLastName() {
+    String getLastName() {
         return lastName;
     }
 
-    public int getClientNumber() {
+    private int getClientNumber() {
         return clientNumber;
     }
 
@@ -34,7 +34,6 @@ public class Client implements Comparable<Client> {
         return text;
     }
 
-    @Override
     public String toString() {
         return "Client{" +
                 "clientNumber=" + clientNumber +
@@ -44,13 +43,11 @@ public class Client implements Comparable<Client> {
                 '}';
     }
 
-    @Override
     public int compareTo(Client o) {
 //        return this.clientNumber - o.clientNumber;  // sortowanie naturalne po id
         return this.firstName.compareTo(o.firstName);
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Client)) return false;
@@ -58,7 +55,6 @@ public class Client implements Comparable<Client> {
         return Objects.equals(firstName, client.firstName);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(firstName);
     }

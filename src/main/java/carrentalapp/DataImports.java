@@ -7,10 +7,10 @@ import java.util.Set;
 
 public class DataImports {
 
-    Map<Client, Car> clientCarRentalMap;
-    Set<Car> cars;
+    private Map<Client, Car> clientCarRentalMap;
+    private Set<Car> cars;
 
-    public DataImports(Map<Client, Car> clientCarRentalMap, Set<Car> cars) {
+    DataImports(Map<Client, Car> clientCarRentalMap, Set<Car> cars) {
         this.clientCarRentalMap = clientCarRentalMap;
         this.cars = cars;
     }
