@@ -40,17 +40,12 @@ public class Clients {
     }
 
     void rentCar(Client c, Car ca) {
-        Set set = clientCarMap.entrySet();
-        Iterator iterator = set.iterator();
-        while (iterator.hasNext()) {
-            Map.Entry mentry = (Map.Entry) iterator.next();
-            if (mentry.getKey().equals(c)) {
-                if (mentry.getValue() != null) {
-                    Car temp = (Car) mentry.getValue();
-                    temp.setRent(false);
-                }
-            }
+
+        Car temp = clientCarMap.get(c);
+        if (temp != null) {
+            temp.setRent(false);
         }
+
         ca.setRent(true);
         clientCarMap.put(c, ca);
     }
